@@ -10,7 +10,10 @@ import sounddevice as sd
 import soundfile as sf
 
 # %% Find all files in a directory and add them to a list
-search_dir = "exercise_3/find_the_wavs"
+search_dir = "/path/to/find_the_wavs"
+if not Path(search_dir).is_dir():
+    raise ValueError(f"Can't find the {search_dir=}!")
+
 p = Path(search_dir).rglob("*.wav")  # same as p = Path(search_dir).glob('**/*wav')
 wavs = [x for x in p]
 
@@ -94,17 +97,19 @@ plt.ylabel("Amplitude")
 plt.show()
 
 # %% Lets select one segment from the call using ginput
+# if you are using inline plots run %matplotlib qt before in your console
+# plt.figure(1)
+# plt.clf()
+# plt.plot(rec)
 # tmp_x,tmp_y = plt.ginput(2) # we use this to select our interval.
 # print(tmp_x,tmp_y)
-plt.show()
-tmp = plt.ginput(2)
-print(f"start sample : {round(tmp[0][0] * fs)}")
-print(f"stop sample : {round(tmp[1][0] * fs)}")
+# print(f"start sample : {round(tmp_x[0])}") # remember to convert to samples
+# print(f"stop sample : {round(tmp_y[1])}")
+# you can now move back to inline plots with %matplotlib inline
 
 # %% we use these values to continue
 # start :  59569
 # stop : 68782
-# alternatively: call = rec[round(tmp[0][0]*fs):round(tmp[1][0]*fs)]
 call = rec[59569:68782]
 t_call = np.linspace(0.0, float(call.shape[0]) / fs, call.shape[0])
 
