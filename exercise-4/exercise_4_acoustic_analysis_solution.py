@@ -9,12 +9,12 @@ import scipy.signal
 import sounddevice as sd
 import soundfile as sf
 
-#%% Find all files in a directory and add them to a list
+# %% Find all files in a directory and add them to a list
 search_dir = "exercise_3/find_the_wavs"
 p = Path(search_dir).rglob("*.wav")  # same as p = Path(search_dir).glob('**/*wav')
 wavs = [x for x in p]
 
-#%% sort the list in-place by the using a lambda function.
+# %% sort the list in-place by the using a lambda function.
 # the lambda function returns the filename as the sorting key.
 # only works because each entry is a Path object
 # which has properties according to:
@@ -25,11 +25,11 @@ wavs.sort(key=lambda x: x.name)
 for idx, val in enumerate(wavs):
     print(f"{idx:02}: {val}")
 
-#%% read the 5th audio file
+# %% read the 5th audio file
 fs, rec_scipy = scipy.io.wavfile.read(wavs[4])
 rec_sf, _ = sf.read(wavs[4])
 
-#%% Extract fs, nchannels, nsamples, duration, bit depth
+# %% Extract fs, nchannels, nsamples, duration, bit depth
 ainfo = sf.info(wavs[4])
 print(f"fs : {ainfo.samplerate}")
 print(f"nchannels : {ainfo.channels}")
@@ -54,7 +54,7 @@ print(f"duration : {float(rec_scipy.shape[0]) / fs}")
 print(f"bit depth : {rec_scipy.dtype} aka 16-bits")
 
 
-#%% what is the difference between sf.read() and scipy.io.wavfile.read()?
+# %% what is the difference between sf.read() and scipy.io.wavfile.read()?
 print("soundfile | scipy")
 print(f"vectors : {rec_scipy[:5]=} | {rec_sf[:5]=}")
 print(f"type : {rec_scipy.dtype=} | {rec_sf.dtype=}")
@@ -67,7 +67,7 @@ print(f"{np.sum(rec_sf-rec_scipy.astype(float)/2**15)=}")
 sd.play(rec_sf, fs)
 sd.wait()  # blocks the interpreter until finished playing
 
-#%% Which recording has most channels and which is the longest?
+# %% Which recording has most channels and which is the longest?
 nch = []
 dur = []
 for x in wavs:
@@ -79,7 +79,7 @@ print(f"Most channels (n = {max(nch)}) in {wavs[np.argmax(nch)]}")
 print(f"Longest recording (dur = {max(dur)}) in {wavs[np.argmax(dur)]}")
 
 
-#%% so from now on we work on the rec #5
+# %% so from now on we work on the rec #5
 # and for plotting we utilize matplotlib
 rec = rec_sf
 
@@ -93,22 +93,22 @@ plt.xlabel("Time [s]")
 plt.ylabel("Amplitude")
 plt.show()
 
-#%% Lets select one segment from the call using ginput
+# %% Lets select one segment from the call using ginput
 # tmp_x,tmp_y = plt.ginput(2) # we use this to select our interval.
 # print(tmp_x,tmp_y)
 plt.show()
 tmp = plt.ginput(2)
-print(f"start sample : {round(tmp[0][0]*fs)}")
-print(f"stop sample : {round(tmp[1][0]*fs)}")
+print(f"start sample : {round(tmp[0][0] * fs)}")
+print(f"stop sample : {round(tmp[1][0] * fs)}")
 
-#%% we use these values to continue
+# %% we use these values to continue
 # start :  59569
 # stop : 68782
 # alternatively: call = rec[round(tmp[0][0]*fs):round(tmp[1][0]*fs)]
 call = rec[59569:68782]
 t_call = np.linspace(0.0, float(call.shape[0]) / fs, call.shape[0])
 
-#%% lets compute the 95% energy
+# %% lets compute the 95% energy
 csig = np.cumsum(call**2)
 csig = csig / np.max(csig)
 idx_95energy = (csig > 0.025) & (csig < 0.975)
@@ -137,7 +137,7 @@ plt.ylabel("Amplitude")
 plt.xlim([t_call[0], t_call[-1]])
 plt.show()
 
-#%% [optinal]: extract parameters from time domain
+# %% [optinal]: extract parameters from time domain
 p0 = 20e-6
 p_peak = 20 * np.log10(np.max(call) / p0)
 p_peak2peak = 20 * np.log10((np.max(call) - np.min(call)) / p0)
@@ -149,11 +149,11 @@ print(f"{p_rms=}")
 print(f"{energy=}")
 
 
-#%% Transform the signal into the frequency domain
+# %% Transform the signal into the frequency domain
 # FFT
 nfft = call.shape[0]
 call_fft = scipy.fft.fft(call, nfft)[: nfft // 2]
-fx = scipy.fft.fftfreq(nfft, 1 / fs)[: nfft // 2]  
+fx = scipy.fft.fftfreq(nfft, 1 / fs)[: nfft // 2]
 # ^its not exactly same with np.linspace but also works
 call_fft = 20 * np.log10(2 / nfft * np.abs(call_fft)) - 10 * np.log10(
     fs / nfft
@@ -180,7 +180,7 @@ plt.ylabel("Amplitude [dB/Hz]")
 plt.grid()
 plt.show()
 
-#%% [optinal]: extract parameters from frequency domain
+# %% [optinal]: extract parameters from frequency domain
 f_peak = fxx[np.argwhere(Pxx == np.max(Pxx))]
 f_minus3dB = fxx[np.argwhere(Pxx > np.max(Pxx) - 3)]  # -3dB
 f_min = f_minus3dB[0]
@@ -194,7 +194,7 @@ print(f"{f_peak=}")
 print(f"{f_minus3dB_bandwidth=}")
 print(f"{f_centroid=}")
 
-#%% Plot a spectrogram of the whole recording
+# %% Plot a spectrogram of the whole recording
 SFT = scipy.signal.ShortTimeFFT(
     np.hanning(1024),
     hop=512,
