@@ -6,7 +6,7 @@ This is the repository for the Sound Communication and Behaviour Group's Python 
 ## Presentation
 https://docs.google.com/presentation/d/1bH0J_6equk9mno7ffnL0q0_LL3T7o7mY8hCRrttJ4Bg/edit?usp=sharing
 
-## Exercises
+## Exercises and tutorials
 ### Exercise 1 - Python basics
 This exercise will teach you the basics of Python.
 * [Exercise 1](./exercise-1/exercise_1_python_basics_solution.ipynb)
@@ -68,3 +68,13 @@ Here is the [solution to exercise 2](./exercise-2/).
 13. [_Optional_] Convert the analysis pipeline into a series of functions such that you can loop over all 15 recordings and display all plots and extract all parameters where possible. 
 
 Here is the [solution to exercise 4](./exercise-4/exercise_4_acoustic_analysis_solution.py).
+
+### Other tutorials
+topic | tutorial
+--- | ---
+Packaging 101 - make you own installable package | https://www.pyopensci.org/python-package-guide/tutorials/intro.html 
+Pandas | https://pandas.pydata.org/docs/getting_started/intro_tutorials/index.html
+Matplotlib | https://matplotlib.org/stable/users/explain/quick_start.html#quick-start
+Numpy | https://numpy.org/devdocs/user/quickstart.html
+Seaborn | https://seaborn.pydata.org/tutorial/introduction.html
+Sklearn (PCA example) | https://scikit-learn.org/stable/auto_examples/decomposition/plot_pca_iris.html#sphx-glr-auto-examples-decomposition-plot-pca-iris-py 
