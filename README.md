@@ -47,7 +47,7 @@ Here is the a template for exercise 3: [my_module.py](./exercise-3/my_module.py)
     * Move the file into a new directory within "exercise-3". 
     * Move the file into a different directory outside of "exercise-3". Use the sys module to append the new path/location of `my_module.py`. 
 
-Here is the [solution to exercise 3](./exercise-2/solution).
+Here is the [solution to exercise 3](./exercise-3/solution).
 
 ### Exercise 4 - Your first acoustic analysis project in Python
 Here is the [template for exercise 4](./exercise-4/exercise_4_acoustic_analysis.py).
