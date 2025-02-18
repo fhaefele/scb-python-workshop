@@ -28,7 +28,8 @@ This exercise is mainly in the terminal. You learn how to make and share virtual
 3. Export the environment to an `<environment>.yml` file. The file should work across platforms.
     * Try creating an environment file for your operating system and compare the two .yml files.
 4. Share the file with someone in class and take their `<environment>.yml` file in return.
-5. Make another venv using that environment file
+5. Make another venv using that environment file, activate it, check its info and package list. 	Deactivate and remove that environment.
+
 
 Here is the [solution to exercise 2](./exercise-2/exercise_2_venvs_solution.txt).
 
