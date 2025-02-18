@@ -9,7 +9,7 @@ https://docs.google.com/presentation/d/1bH0J_6equk9mno7ffnL0q0_LL3T7o7mY8hCRrttJ
 ## Exercises and tutorials
 ### Exercise 1 - Python basics
 This exercise will teach you the basics of Python.
-* [Exercise 1](./exercise-1/exercise_1_python_basics_solution.ipynb)
+* [Exercise 1](./exercise-1/exercise_1_python_basics.ipynb)
 * [Exercise 1 solution](./exercise-1/exercise_1_python_basics_solution.ipynb)
 
 
@@ -30,10 +30,10 @@ This exercise is mainly in the terminal. You learn how to make and share virtual
 4. Share the file with someone in class and take their `<environment>.yml` file in return.
 5. Make another venv using that environment file
 
-Here is the [solution to exercise 2](./exercise-2/).
+Here is the [solution to exercise 2](./exercise-2/exercise_2_venvs_solution.txt).
 
 
-### Exercise 3 - Make venvs and share them
+### Exercise 3 - Write a Python module and use it
 1. Make a project folder called "exercise_2".
 2. Write a Python module called `<module_name>.py` by opening a script in your favorite editor.
     * Define at least 3 functions in `<module_name>.py`. 
