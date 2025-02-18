@@ -2,6 +2,8 @@
 # In Conda, you can create a virtual environment using the conda create command. 
 # Conda supports both long (e.g. `--name`) and short (`-n`) flags when specifying an environment name. 
 # You can explore all available flags using: `conda create --help` (or `conda create -h`)
+# You can find more information about creating and managing conda environments here:
+# https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html 
 
 
 # Create a virtual environment with Python 3.12. 
