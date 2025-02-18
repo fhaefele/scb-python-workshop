@@ -17,6 +17,7 @@ This exercise will teach you the basics of Python.
 This exercise is mainly in the terminal. You learn how to make and share virtual environments.
 
 1. Make a virtual environment (venv) with conda and python version 3.12. 
+    * Verify that your environment was created by listing all available environments.
     * Activate it and use `conda info` and/or `conda config --show channels` commands to display information about the environment’s package channels (i.e. repositories from which packages will be installed)
     * Add the conda-forge channel (more up-to-date and community-run). Use `conda config -h` (or `--help`) or https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-channels.html to learn how to do that . Once added, display the environment’s channel priority information, and make sure it is set to 'strict'.
 2. Install the following packages:

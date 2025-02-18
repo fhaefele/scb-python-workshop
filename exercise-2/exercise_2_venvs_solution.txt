@@ -1,10 +1,19 @@
-# Create a virtual environment with Python 3.12
+# A virtual environment allows you to manage dependencies for different projects separately. 
+# In Conda, you can create a virtual environment using the conda create command. 
+# Conda supports both long (e.g. `--name`) and short (`-n`) flags when specifying an environment name. 
+# You can explore all available flags using: `conda create --help` (or `conda create -h`)
+
+
+# Create a virtual environment with Python 3.12. 
 conda create --name spyder-env python=3.12
 
 # You can install selected packages when creating an environment.
 # Since we want this environment to be conda-forge based, we add the conda-forge channel when calling `conda create`.
 # The conda-forge channel is community-run and more up-to-date than the default conda channel.
-# conda create -c conda-forge --name spyder-env python=3.12 spyder spyder-notebook
+# conda create --channel conda-forge -n spyder-env python=3.12 spyder spyder-notebook
+
+# Verify that your environment was created by listing all available environments.
+conda env list
 
 # Activate the environment
 conda activate spyder-env
@@ -60,6 +69,12 @@ conda env export --from-history > spyder_env_environment_fh.yml
 # Create an environment from a provided environment file
 conda env create -f spyder_env_environment_fh.yml -n shared_env
 
-# List packages installed in the new environment
+# Activate the environment, list packages installed in the new environment
+conda activate shared_env
 conda list
 
+# Get more details about the environment and its package repositories
+conda info
+
+# Deactivate and remove the environment 
+conda env remove -n shared_env --yes
