@@ -47,6 +47,8 @@ Here is the [solution to exercise 2](./exercise-2/).
 
 
 ### Exercise 4 - Your first acoustic analysis project in Python
+Here is the [template for exercise 4](./exercise-4/exercise_4_acoustic_analysis.py).
+
 1. Make a new directory and unzip the zip-folder "find_the_wavs.zip" into it.
 2. Make a new venv for this exercise and install the packages `scipy`, `matplotlib`, `soundfile` and `sounddevice`.
 3. There are 15 audio files hidden in "find_the_wavs". Find all and put them into a single list. Sort the list based on the filenames.

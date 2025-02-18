@@ -1,3 +1,4 @@
+# %% Add your imports here
 import wave
 from pathlib import Path
 
@@ -9,7 +10,8 @@ import scipy.signal
 import sounddevice as sd
 import soundfile as sf
 
-# %% Find all files in a directory and add them to a list
+
+# %% 3.) Find all 15 wav files in the directory "find_the_wavs" and add them to a list
 search_dir = "/path/to/find_the_wavs"
 if not Path(search_dir).is_dir():
     raise ValueError(f"Can't find the {search_dir=}!")
@@ -17,7 +19,9 @@ if not Path(search_dir).is_dir():
 p = Path(search_dir).rglob("*.wav")  # same as p = Path(search_dir).glob('**/*wav')
 wavs = [x for x in p]
 
-# %% sort the list in-place by the using a lambda function.
+
+# %% sort the based on the file names
+# sort the list in-place by the using a lambda function.
 # the lambda function returns the filename as the sorting key.
 # only works because each entry is a Path object
 # which has properties according to:
@@ -28,11 +32,14 @@ wavs.sort(key=lambda x: x.name)
 for idx, val in enumerate(wavs):
     print(f"{idx:02}: {val}")
 
-# %% read the 5th audio file
+
+# %% 4.) Read a random audio file
+# read the 5th audio file
 fs, rec_scipy = scipy.io.wavfile.read(wavs[4])
 rec_sf, _ = sf.read(wavs[4])
 
-# %% Extract fs, nchannels, nsamples, duration, bit depth
+
+# %% 4a) Extract fs, nchannels, nsamples, duration, bit depth
 ainfo = sf.info(wavs[4])
 print(f"fs : {ainfo.samplerate}")
 print(f"nchannels : {ainfo.channels}")
@@ -57,7 +64,7 @@ print(f"duration : {float(rec_scipy.shape[0]) / fs}")
 print(f"bit depth : {rec_scipy.dtype} aka 16-bits")
 
 
-# %% what is the difference between sf.read() and scipy.io.wavfile.read()?
+# %% 4b) What is the difference between soundfile.read() and scipy.io.wavfile.read()?
 print("soundfile | scipy")
 print(f"vectors : {rec_scipy[:5]=} | {rec_sf[:5]=}")
 print(f"type : {rec_scipy.dtype=} | {rec_sf.dtype=}")
@@ -66,11 +73,13 @@ print(f"type : {rec_scipy.dtype=} | {rec_sf.dtype=}")
 # we can get the same if we scale scipy or soundfile
 print(f"{np.sum(rec_sf-rec_scipy.astype(float)/2**15)=}")
 
-# lets play the sound file.
+
+# %% 4c) Play the audio file at an appropriate sampling rate.
 sd.play(rec_sf, fs)
 sd.wait()  # blocks the interpreter until finished playing
 
-# %% Which recording has most channels and which is the longest?
+
+# %% 5.) [Optional] Which recording has most channels and which is the longest?
 nch = []
 dur = []
 for x in wavs:
@@ -82,9 +91,8 @@ print(f"Most channels (n = {max(nch)}) in {wavs[np.argmax(nch)]}")
 print(f"Longest recording (dur = {max(dur)}) in {wavs[np.argmax(dur)]}")
 
 
-# %% so from now on we work on the rec #5
-# and for plotting we utilize matplotlib
-rec = rec_sf
+# %% 6.) Plot the oscillogram of the recording #5 with an appropriate time scale.
+rec = rec_sf  # which is recording 5
 
 t = np.linspace(0.0, float(rec_scipy.shape[0]) / fs, rec.shape[0])
 
@@ -96,7 +104,15 @@ plt.xlabel("Time [s]")
 plt.ylabel("Amplitude")
 plt.show()
 
-# %% Lets select one segment from the call using ginput
+
+# %% 7.) Select only a single call from the recording. The segment should only contain a single vocalization.
+# Lets select one segment from the call using ginput or by zooming and then requesting xl = plt.xlim()
+# if you are using inline plots run %matplotlib qt before in your console
+# If you want to go back to inline plots run: %matplotlib inline
+# Keep in mind, that inline plots are not interactive. For always interactive plots (Matlab style)
+# you should keep %matplotlib qt set. If you get an error makes ure you install the package PyQT6 in you venv.
+
+# Lets select one segment from the call using ginput
 # if you are using inline plots run %matplotlib qt before in your console
 # plt.figure(1)
 # plt.clf()
@@ -107,18 +123,20 @@ plt.show()
 # print(f"stop sample : {round(tmp_y[1])}")
 # you can now move back to inline plots with %matplotlib inline
 
-# %% we use these values to continue
+# we use these values to continue
 # start :  59569
 # stop : 68782
 call = rec[59569:68782]
 t_call = np.linspace(0.0, float(call.shape[0]) / fs, call.shape[0])
 
-# %% lets compute the 95% energy
+
+# %% 8.) Make a plot indicating the 95% energy window. Start by by computing the cumulative energy.
+# and then compute the 95% energy window, ie. a boolean vector indicating which part of the signal
+# is within the window. Then make a combined figure to show the segment including the energy window.
 csig = np.cumsum(call**2)
 csig = csig / np.max(csig)
 idx_95energy = (csig > 0.025) & (csig < 0.975)
 
-# make a combined figure to show the segment including the energy window
 plt.figure(2)
 plt.clf()
 plt.subplot(3, 1, 1)
@@ -142,7 +160,9 @@ plt.ylabel("Amplitude")
 plt.xlim([t_call[0], t_call[-1]])
 plt.show()
 
-# %% [optinal]: extract parameters from time domain
+
+# %% 9.) [Optional]: Extract the following basic parameters from the time domain signal:
+# peak, peak-to-peak and RMS pressure, energy.
 p0 = 20e-6
 p_peak = 20 * np.log10(np.max(call) / p0)
 p_peak2peak = 20 * np.log10((np.max(call) - np.min(call)) / p0)
@@ -154,7 +174,9 @@ print(f"{p_rms=}")
 print(f"{energy=}")
 
 
-# %% Transform the signal into the frequency domain
+# %% 10.) Transform the signal into the frequency domain. Start by making a simple FFT of the signal.
+# Compute also the power spectral density estimate using Welch's method. Normalize both such that they
+# have the unit [dB/Hz]. Plot them both into a single plot.
 # FFT
 nfft = call.shape[0]
 call_fft = scipy.fft.fft(call, nfft)[: nfft // 2]
@@ -185,7 +207,9 @@ plt.ylabel("Amplitude [dB/Hz]")
 plt.grid()
 plt.show()
 
-# %% [optinal]: extract parameters from frequency domain
+
+# %% 11.) [Optional]: Extract the following basic parameters from the frequency domain signal:
+# peak frequency, bandwidth and centroid frequency.
 f_peak = fxx[np.argwhere(Pxx == np.max(Pxx))]
 f_minus3dB = fxx[np.argwhere(Pxx > np.max(Pxx) - 3)]  # -3dB
 f_min = f_minus3dB[0]
@@ -199,7 +223,8 @@ print(f"{f_peak=}")
 print(f"{f_minus3dB_bandwidth=}")
 print(f"{f_centroid=}")
 
-# %% Plot a spectrogram of the whole recording
+
+# %% 12.) Plot a spectrogram of the whole recording
 SFT = scipy.signal.ShortTimeFFT(
     np.hanning(1024),
     hop=512,
