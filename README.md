@@ -34,17 +34,20 @@ Here is the [solution to exercise 2](./exercise-2/exercise_2_venvs_solution.txt)
 
 
 ### Exercise 3 - Write a Python module and use it
-1. Make a project folder called "exercise_2".
-2. Write a Python module called `<module_name>.py` by opening a script in your favorite editor.
-    * Define at least 3 functions in `<module_name>.py`. 
+Here is the a template for exercise 3: [my_module.py](./exercise-3/my_module.py) and [my_script.py](./exercise-3/my_script.py).
+
+1. Make a project folder called "exercise-3".
+2. Write a Python module called `my_module.py` by opening a script in your favorite editor.
+    * Define at least 3 functions in `my_module.py`. 
     * Each of the functions should have a variation of positional and keyword arguments.
     * Write docstrings for your functions.
-3. Create a second script `<test>.py` in the same directory and import the module.
-4. Execute all of your functions in `<test>.py`. Use a variation of arguments to test your functions. You should also print the docstring to the terminal using the `help(<module_name>.<your_function>)` command.
-5. Now move the `<module_name>.py` file into a different directory and adjust the imports accordingly.
-    * Move the file into a new directory within "exercise_2". 
-    * Move the file into a different directory outside of "exercise_2". Use the sys module to append the new path/location of `<module_name>.py`. 
+3. Create a second script `my_script.py` in the same directory and import the module.
+4. Execute all of your functions in `my_script.py`. Use a variation of arguments to test your functions. You should also print the docstring to the terminal using the `help(my_module.<your_function>)` command.
+5. Now move the `my_module.py` file into a different directory and adjust the imports accordingly.
+    * Move the file into a new directory within "exercise-3". 
+    * Move the file into a different directory outside of "exercise-3". Use the sys module to append the new path/location of `my_module.py`. 
 
+Here is the [solution to exercise 3](./exercise-2/solution/).
 
 ### Exercise 4 - Your first acoustic analysis project in Python
 Here is the [template for exercise 4](./exercise-4/exercise_4_acoustic_analysis.py).
